@@ -1,11 +1,15 @@
-var Board = function() {
+var Game = function() {
   this.board = [
-    [-, -, -],
-    [-, -, -],
-    [-, -, -]
+    ['-', '-', '-'],
+    ['-', '-', '-'],
+    ['-', '-', '-']
   ];
 };
 
-var Game = function() {
-  this.board = new Board();
+Game.prototype = {
+  printBoard: function() {
+    this.board.forEach(function(row) {
+      console.log(row);
+    });
+  }
 };
