@@ -1,4 +1,4 @@
-var rl = require('readline');
+var readlineSync = require('readline-sync');
 
 var Game = function() {
   this.board = [
@@ -6,6 +6,7 @@ var Game = function() {
     ['-', '-', '-'],
     ['-', '-', '-']
   ];
+  this.gameOver = false;
 };
 
 Game.prototype = {
@@ -64,30 +65,54 @@ Game.prototype = {
   },
 
   start: function() {
+    this.board = [
+      ['-', '-', '-'],
+      ['-', '-', '-'],
+      ['-', '-', '-']
+    ];
+    this.gameOver = false;
 
+    while (!this.gameOver) {
+      if (this.checkWin()) {
+        this.gameOver = true;
+      } else {
+        this.printBoard();
+        console.log('oi get here');
+        this.promptPlayer1();
+        if (this.checkWin()) { console.log('X wins!'); }
+        this.printBoard();
+        this.promptPlayer2();
+        if (this.checkWin()) { console.log('O wins!'); }
+      }
+    }
+
+    return this.gameOver; // TODO
   },
 
   promptPlayer1: function() {
-    var read = rl.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+    var pos = readlineSync.question('Player 1: You are [X], where would you like to place your piece? Input accepted: row, col');
+    var row = pos.split(',')[0];
+    var col = pos.split(',')[1];
 
-    read.question('Player 1: You are [X], where would you like to place your piece? Input accepted: row, col', function(rowCol) {
-      var row = rowCol.split(',')[0];
-      var col = rowCol.split(',')[1];
-
-      if (row >= 3 || row < 0 || col >= 3 || col < 0) {
-        console.log('Invalid input, please specify a row/col between 0 and 2');
-      } else {
-        read.close();
-        console.log('Successfully placed your piece!');
-      }
-    })
+    if (row >= 3 || row < 0 || col >= 3 || col < 0) {
+      console.log('Invalid input, please specify a row/col between 0 and 2');
+    } else {
+      this.board[row][col] = 'X';
+      console.log('Successfully placed your piece!');
+    }
   },
 
   promptPlayer2: function() {
+    var pos = readlineSync.question('Player 2: You are [O], where would you like to place your piece? Input accepted: row, col');
+    var row = pos.split(',')[0];
+    var col = pos.split(',')[1];
 
+    if (row >= 3 || row < 0 || col >= 3 || col < 0) {
+      console.log('Invalid input, please specify a row/col between 0 and 2');
+    } else {
+      this.board[row][col] = 'O';
+      console.log('Successfully placed your piece!');
+    }
   }
 };
 
