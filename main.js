@@ -50,5 +50,14 @@ Game.prototype = {
 
   checkWin: function() {
     return this.checkWinHorizontal() || this.checkWinVertical() || this.checkWinDiagonal();
+  },
+
+  placePiece: function(row, col, piece) {
+    if (this.board[row][col] !== '-') {
+      return false;
+    } else {
+      this.board[row][col] = piece;
+      return true;
+    }
   }
 };
