@@ -23,6 +23,14 @@ Game.prototype = {
     })
   },
 
-  
+  checkWinVertical: function() {
+    this.board.forEach(function(col, idx) {
+      if (this.board[idx][0] === this.board[idx][1] === this.board[idx][2]) {
+        return this.board[idx][0] === '-' ? null :
+          this.board[idx][0] === 'X' ? 'X wins' :
+          'O wins';
+      }
+    });
+  }
 };
 
