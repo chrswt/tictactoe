@@ -1,5 +1,4 @@
 var rl = require('readline');
-var prompts = rl.createInterface(process.stdin, process.stdout);
 
 var Game = function() {
   this.board = [
@@ -62,5 +61,35 @@ Game.prototype = {
       this.board[row][col] = piece;
       return true;
     }
+  },
+
+  start: function() {
+
+  },
+
+  promptPlayer1: function() {
+    var read = rl.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    read.question('Player 1: You are [X], where would you like to place your piece? Input accepted: row, col', function(rowCol) {
+      var row = rowCol.split(',')[0];
+      var col = rowCol.split(',')[1];
+
+      if (row >= 3 || row < 0 || col >= 3 || col < 0) {
+        console.log('Invalid input, please specify a row/col between 0 and 2');
+      } else {
+        read.close();
+        console.log('Successfully placed your piece!');
+      }
+    })
+  },
+
+  promptPlayer2: function() {
+
   }
 };
+
+var game = new Game();
+game.start();
