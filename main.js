@@ -141,5 +141,4 @@ Game.prototype = {
   }
 };
 
-var game = new Game();
-game.start();
+module.exports = Game;
