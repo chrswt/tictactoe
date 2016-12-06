@@ -3,7 +3,7 @@ var app = require('../main');
 console.log(app);
 
 describe('Tic Tac Toe', function() {
-  describe('Game Logic ', function() {
+  describe('Game Win Checking ', function() {
     it('Should detect horizontal wins', function() {
       var game = new app();
       game.board[0][0] = 'X';
@@ -28,4 +28,12 @@ describe('Tic Tac Toe', function() {
       assert.equal('X wins', game.checkWin());
     })
   });
+
+  describe('Game Logic', function() {
+    it('Should not allow pieces to be placed over other pieces', function() {
+      var game = new app();
+      game.placePiece(0, 0, 'X');
+      assert.equal(false, game.placePiece(0, 0, 'O'));
+    })
+  })
 });

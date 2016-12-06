@@ -115,7 +115,11 @@ Game.prototype = {
       console.log('Invalid input, please specify a row/col between 0 and 2');
       this.promptPlayer1();
     } else {
-      this.board[row][col] = 'X';
+      var chk = this.placePiece(row, col, 'X');
+      if (!chk) {
+        console.log('There is already a piece there!');
+        this.promptPlayer1;
+      }
       console.log('Successfully placed your piece!');
     }
   },
@@ -135,10 +139,19 @@ Game.prototype = {
       console.log('Invalid input, please specify a row/col between 0 and 2');
       this.promptPlayer2();
     } else {
-      this.board[row][col] = 'O';
+      var chk = this.placePiece(row, col, 'O');
+      if (!chk) {
+        console.log('There is already a piece there!');
+        this.promptPlayer2();
+      }
       console.log('Successfully placed your piece!');
     }
   }
 };
+
+if (!module.parent) {
+  var game = new Game();
+  game.start();
+}
 
 module.exports = Game;
